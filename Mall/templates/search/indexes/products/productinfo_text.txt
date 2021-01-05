@@ -1,3 +1,0 @@
-{{ object.product_name }}
-{{ object.product_abstract }}
-{{ object.product_content }}
