@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'haystack',
+    # 'haystack',
     'user_part',
     'products',
-    'tinymce',
+    # 'tinymce',
     'carts',
     'order',
 ]
