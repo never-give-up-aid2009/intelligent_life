@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>宠物衣服列表页</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<script type="text/javascript" src="../static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../static/js/jquery.form.min.js"></script>
+</head>
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到爱宠商城!</div>
+			<div class="fr">
+				<div class="login_btn fl">
+
+					欢迎您：<em>asdfg</em>
+					<span>|</span>
+					<a href="/logout/">退出</a>
+
+				</div>
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="/info/">用户中心</a>
+					<span>|</span>
+					<a href="/cart/">我的购物车</a>
+					<span>|</span>
+					<a href="/order/">我的订单</a>
+				</div>
+			</div>
+		</div>
+		<div id="weather" style="position:absolute;left:250px;margin-top:-32px;">
+			<h1 id="region" style="display=inline-block">西安</h1>
+			<h1 id="tep" style="display=inline-block">15℃/-3℃</h1>
+		</div>
+	</div>
+
+
+<div  style="height:80%;border: 1px solid black;width:100%
+;margin-top:10px;
+position:relative;overflow:hidden">
+    <div class="wangid_conbox" style="">
+    <!-- 当前位置 -->
+    <!-- 筛选 -->
+    <div class="shuaix" align="center" >
+        <div class="right">
+            <input type="text" placeholder="请输关键字查询" class="name">
+            <input class="chazhao" type="submit" value="查询"
+                   style="width: 100px;height: 30px;background-color: white;cursor: pointer;font-size:20px">
+        	<hr>
+			<a href="/pet_closet_add" style="font-size:20px" >添加</a>
+		</div>
+    </div>
+    <!-- 内容 -->
+		<div align="center" style="overflow:auto;width: 80%;height:400px;position:absolute;left:110px">
+    		<table class="layui-table" lay-filter="mylist" lay-size="lg" align="center" style="font-size:20px;overflow:auto">
+        <thead>
+        <tr>
+            <th lay-data="{type:'checkbox',fixed:'left'}"></th>
+            <th lay-data="{field:'dep_name', align:'center',width:100}">序号</th>
+            <th lay-data="{field:'cloth_name',align:'center', minWidth:600}">衣服名称</th>
+<!--            <th lay-data="{field:'avatar',align:'center',minWidth:130}">图片</th>-->
+            <th lay-data="{field:'season',align:'center',minWidth:130}">季节</th>
+            <th lay-data="{field:'style',align:'center',minWidth:130}">款式</th>
+            <th lay-data="{field:'function',align:'center',minWidth:130}">功能</th>
+            <th lay-data="{field:'remark',align:'center',minWidth:130}">备注</th>
+            <th lay-data="{field:'created_time',align:'center',minWidth:130}">上传时间</th>
+            <th lay-data="{field:'name',align:'center', minWidth:170}">操作</th>
+
+        </tr>
+        </thead>
+
+        <tbody class="biaoqian">
+            <tbody class="123">
+
+            </tbody>
+        </tbody>
+    </table></div>
+</div>
+
+</div >
+
+
+
+
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 北京爱宠有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+</body>
+
+
+
+
+<script type="text/javascript">
+	var url="http://127.0.0.1:8000/v1/pet_closet/list"
+	$(function(){
+   		var html_value="";
+		$.ajax({
+			type:"get",
+			url:url,
+			dataType:'json',
+			contentType:'application/json',
+			success:function(res){
+				if (200 == res.code){
+					var data=res.obj;
+					for(var i=0;i<data.length;i++){
+			    	var id =i+1;
+					var uid=data[i].id
+					var cloth_name =data[i].cloth_name;
+					var season =data[i].season;
+					var style =data[i].style;
+					var function1 =data[i].function;
+					var remark =data[i].remark;
+					var created_time =data[i].created_time;
+
+					html_value+=' <tr>';
+					html_value+='<td></td>';
+					html_value+='<td>'+ id+' </td>';
+					html_value+='<td>';
+					html_value+='<a href="/notice?id='+ uid + '">';
+					html_value+=cloth_name;
+					html_value+='</a>';
+					html_value+='</td>';
+					html_value+='<td>'+ season+' </td>';
+					html_value+='<td>'+ style+' </td>';
+					html_value+='<td>'+ function1+' </td>';
+					html_value+='<td>'+ remark+' </td>';
+					html_value+='<td>'+ created_time+' </td>';
+					html_value+='<td>';
+					html_value+='<a href="/notice_update?id='+uid+'">修改</a>';
+					html_value+='<a href="javascript:show('+uid+') "  >删除</a>'
+					html_value+='</td>';
+					html_value+='</tr>';
+					$(".123").html(html_value);
+			        }
+		        }
+	        }
+	     })
+		})
+
+		$('.chazhao').click(function(){
+			var html_value2="";
+			var name=$('.name').val();
+            name_data={'name':name};
+            $.ajax({
+				type:"POST",
+                  url:url,
+                  dataType:'json',
+                  data:JSON.stringify(name_data),
+                  contentType:'application/json',
+                  success:function(res){
+                  		if(200 == res.code){
+                  			var data=res.obj;
+                  			for(var i=0;i<data.length;i++){
+							var id =i+1;
+							var uid=data[i].id
+							var cloth_name =data[i].cloth_name;
+							var season =data[i].season;
+							var style =data[i].style;
+							var function1 =data[i].function;
+							var remark =data[i].remark;
+							var created_time =data[i].created_time;
+
+							html_value+=' <tr>';
+							html_value+='<td></td>';
+							html_value+='<td>'+ id+' </td>';
+							html_value+='<td>';
+							html_value+='<a href="/notice?id='+ uid + '">';
+							html_value+=cloth_name;
+							html_value+='</a>';
+							html_value+='</td>';
+							html_value+='<td>'+ season+' </td>';
+							html_value+='<td>'+ style+' </td>';
+							html_value+='<td>'+ function1+' </td>';
+							html_value+='<td>'+ remark+' </td>';
+							html_value+='<td>'+ created_time+' </td>';
+							html_value+='<td>';
+							html_value+='<a href="/notice_update?id='+uid+'">修改</a>';
+							html_value+='<a href="javascript:show('+uid+') "  >删除</a>'
+							html_value+='</td>';
+							html_value+='</tr>';
+							$(".biaoqian").html(html_value2);}
+								}else{
+								 alert('关键字错误')
+                  		}
+                  }
+            	})
+			})
+
+</script>
+
+
+</html>

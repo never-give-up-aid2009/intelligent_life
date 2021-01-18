@@ -91,6 +91,15 @@ def site_detail():
     #互动内容详情
     return send_file('templates/site.html')
 
+@app.route('/pet_closet_add')
+def pet_closet_add():
+    #互动内容详情
+    return send_file('templates/pet_closet_add.html')
+
+@app.route('/pet_closet_list')
+def pet_closet_list():
+    #互动内容详情
+    return send_file('templates/pet_closet_list.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
